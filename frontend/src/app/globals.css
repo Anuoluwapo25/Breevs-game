@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+.loading-text {
+  -webkit-text-stroke: 0.5px #ff3b3b;
+  color: transparent;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.8);
+}
+
+.custom-connect button{
+  border-radius: 50px !important;
+  background-color: #191f57 !important;
+  font-family: "Open Sans", sans-serif !important;
+  padding: 0.5rem 3.1rem !important;
+}

@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Alice Johnson",
+    "tokens": 1500,
+    "gamesPlayed": 50,
+    "gamesWon": 30,
+    "image": "/images/alice.jpg"
+  },
+  {
+    "name": "Bob Smith",
+    "tokens": 1200,
+    "gamesPlayed": 40,
+    "gamesWon": 25,
+    "image": "/images/bob.jpg"
+  },
+  {
+    "name": "Charlie Davis",
+    "tokens": 1800,
+    "gamesPlayed": 60,
+    "gamesWon": 35,
+    "image": "/images/charlie.jpg"
+  },
+  {
+    "name": "Diana Evans",
+    "tokens": 900,
+    "gamesPlayed": 30,
+    "gamesWon": 20,
+    "image": "/images/diana.jpg"
+  },
+  {
+    "name": "Ethan Wright",
+    "tokens": 1100,
+    "gamesPlayed": 45,
+    "gamesWon": 28,
+    "image": "/images/ethan.jpg"
+  },
+  {
+    "name": "Fiona Clark",
+    "tokens": 1600,
+    "gamesPlayed": 55,
+    "gamesWon": 40,
+    "image": "/images/fiona.jpg"
+  },
+  {
+    "name": "George Miller",
+    "tokens": 1300,
+    "gamesPlayed": 48,
+    "gamesWon": 27,
+    "image": "/images/george.jpg"
+  },
+  {
+    "name": "Hannah Wilson",
+    "tokens": 800,
+    "gamesPlayed": 25,
+    "gamesWon": 15,
+    "image": "/images/hannah.jpg"
+  },
+  {
+    "name": "Isaac Brown",
+    "tokens": 1400,
+    "gamesPlayed": 52,
+    "gamesWon": 33,
+    "image": "/images/isaac.jpg"
+  },
+  {
+    "name": "Jessica Lee",
+    "tokens": 1700,
+    "gamesPlayed": 58,
+    "gamesWon": 37,
+    "image": "/images/jessica.jpg"
+  },
+  {
+    "name": "Kevin Thomas",
+    "tokens": 1250,
+    "gamesPlayed": 42,
+    "gamesWon": 24,
+    "image": "/images/kevin.jpg"
+  },
+  {
+    "name": "Liam White",
+    "tokens": 1550,
+    "gamesPlayed": 53,
+    "gamesWon": 34,
+    "image": "/images/liam.jpg"
+  },
+  {
+    "name": "Mia Adams",
+    "tokens": 1350,
+    "gamesPlayed": 47,
+    "gamesWon": 29,
+    "image": "/images/mia.jpg"
+  },
+  {
+    "name": "Nathan Harris",
+    "tokens": 1450,
+    "gamesPlayed": 51,
+    "gamesWon": 32,
+    "image": "/images/nathan.jpg"
+  },
+  {
+    "name": "Olivia Martin",
+    "tokens": 1750,
+    "gamesPlayed": 57,
+    "gamesWon": 38,
+    "image": "/images/olivia.jpg"
+  },
+  {
+    "name": "Patrick Nelson",
+    "tokens": 1050,
+    "gamesPlayed": 35,
+    "gamesWon": 22,
+    "image": "/images/patrick.jpg"
+  },
+  {
+    "name": "Quinn Roberts",
+    "tokens": 1950,
+    "gamesPlayed": 65,
+    "gamesWon": 45,
+    "image": "/images/quinn.jpg"
+  },
+  {
+    "name": "Rachel Scott",
+    "tokens": 1150,
+    "gamesPlayed": 38,
+    "gamesWon": 23,
+    "image": "/images/rachel.jpg"
+  },
+  {
+    "name": "Samuel Turner",
+    "tokens": 1650,
+    "gamesPlayed": 54,
+    "gamesWon": 36,
+    "image": "/images/samuel.jpg"
+  },
+  {
+    "name": "Tina Brooks",
+    "tokens": 2000,
+    "gamesPlayed": 70,
+    "gamesWon": 50,
+    "image": "/images/tina.jpg"
+  }
+]
