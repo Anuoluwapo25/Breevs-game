@@ -33,7 +33,7 @@ module.exports = {
     // Explorer : https://celo-sepolia.blockscout.com
     // Faucet   : https://faucet.celo.org/sepolia
     "celo-sepolia": {
-      url: "https://celo-sepolia.drpc.org",
+      url: process.env.RPC_URL || "https://celo-sepolia.drpc.org",
       chainId: 11142220,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },

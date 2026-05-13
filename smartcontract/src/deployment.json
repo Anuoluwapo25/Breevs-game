@@ -1,9 +1,9 @@
 {
   "network": "celo-sepolia",
   "chainId": "11142220",
-  "contractAddress": "0x33A4179616d5e22d5115e5d2Be39AFB5af2F8D5D",
-  "deployer": "0x95e1CF9174AbD55E47b9EDa1b3f0F2ba0f4369a0",
-  "deployedAt": "2026-05-05T20:02:36.228Z",
+  "contractAddress": "0x2c8C776D10647daa0D59D319d1C33CA364068e48",
+  "deployer": "0x4E0839B4ecf8DC3aD2Ba5D46737678d3126458F7",
+  "deployedAt": "2026-05-13T10:26:32.617Z",
   "constants": {
     "MAX_PLAYERS": "6",
     "MIN_PLAYER_STAKE_CELO": "1.0",
