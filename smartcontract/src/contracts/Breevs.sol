@@ -168,22 +168,80 @@ contract BreevsRussianRoulette {
         require(g.status == Status.IN_PROGRESS, "Game not in progress");
         require(block.number <= g.roundEnd, "Round has expired");
 
+        // Auto-clear a spin that expired (> 200 blocks old) so the game doesn't get stuck
+        SpinRequest storage existing = pendingSpins[gameId];
+        if (existing.pending && block.number > existing.commitBlock + 200) {
+            delete pendingSpins[gameId];
+        }
+
+        require(!pendingSpins[gameId].pending, "Spin already pending");
+
         address[] memory active = _getActivePlayers(gameId);
         require(active.length > 1, "Only one player left");
 
-        // Random index derived from block data + game-specific values.
-        // Not cryptographically unpredictable, but sufficient for a
-        // social/entertainment game where the host triggers spins live.
-        uint256 seed = uint256(
-            keccak256(
-                abi.encodePacked(
-                    blockhash(block.number - 1), // previous block hash
-                    block.timestamp, // current block timestamp
-                    gameId, // unique per game
-                    g.currentRound, // unique per round
-                    active.length, // number of players still alive
-                    msg.sender // host address
-                )
+        pendingSpins[gameId] = SpinRequest({
+            pending: true,
+            commitBlock: block.number,
+            round: g.currentRound
+        });
+
+        emit SpinRequested(gameId, block.number, g.currentRound);
+    }
+
+    /**
+     * @notice STEP 2 – Anyone resolves the pending spin after REVEAL_DELAY blocks.
+     *
+     *         The contract fetches the Celo RANDAO randomness that was revealed
+     *         for the commit block, combines it with additional game-specific
+     *         entropy, and uses the result to pick the eliminated player.
+     *
+     *         By waiting REVEAL_DELAY blocks the randomness is finalised and
+     *         the host cannot selectively include / exclude their own transaction
+     *         to bias the outcome.
+     */
+    function resolveSpin(uint256 gameId) external {
+        Game storage g = games[gameId];
+        SpinRequest storage req = pendingSpins[gameId];
+
+        require(req.pending, "No pending spin");
+        require(g.status == Status.IN_PROGRESS, "Game not in progress");
+        require(
+            block.number >= req.commitBlock + REVEAL_DELAY,
+            "Must wait for RANDAO reveal"
+        );
+        // Safety: if the commit block is too old the RANDAO value may no
+        // longer be stored. 256 blocks is the EVM's blockhash window; Celo's
+        // Random contract retains history longer, but we cap at 200 for safety.
+        require(
+            block.number <= req.commitBlock + 200,
+            "Spin request expired - request a new spin"
+        );
+
+        // ── Fetch randomness: try Celo RANDAO first, fall back to blockhash ────
+        bytes32 celoRandom;
+        try randomContract.getBlockRandomness(req.commitBlock) returns (bytes32 rand) {
+            celoRandom = rand;
+        } catch {}
+        if (celoRandom == bytes32(0)) {
+            // blockhash() only works within 256 blocks — safe given our 200-block cap
+            celoRandom = blockhash(req.commitBlock);
+        }
+        require(
+            celoRandom != bytes32(0),
+            "Randomness unavailable - resolve within 200 blocks"
+        );
+
+        // ── Mix with game-specific entropy to prevent cross-game reuse ────────
+        address[] memory active = _getActivePlayers(gameId);
+        require(active.length > 1, "Only one player left");
+
+        bytes32 seed = keccak256(
+            abi.encodePacked(
+                celoRandom, // Celo RANDAO – unmanipulable by host
+                gameId, // unique per game
+                req.round, // unique per round
+                req.commitBlock, // block the commitment was made
+                _hashPlayers(active) // current active player set
             )
         );
 
@@ -202,6 +260,14 @@ contract BreevsRussianRoulette {
         Game storage g = games[gameId];
         require(g.status == Status.IN_PROGRESS, "Not in progress");
         require(block.number > g.roundEnd, "Round not ended yet");
+
+        // Auto-clear expired spins so the round can advance
+        SpinRequest storage existing = pendingSpins[gameId];
+        if (existing.pending && block.number > existing.commitBlock + 200) {
+            delete pendingSpins[gameId];
+        }
+
+        require(!pendingSpins[gameId].pending, "Resolve pending spin first");
 
         address[] memory active = _getActivePlayers(gameId);
         if (active.length <= 1) {
